@@ -162,5 +162,39 @@ function startCountdown(startTime) {
     setInterval(updateCountdown, 1000);
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    const themeToggle = document.createElement("button");
+    themeToggle.innerText = "Switch Theme";
+    themeToggle.style.position = "absolute";
+    themeToggle.style.top = "20px";
+    themeToggle.style.right = "20px";
+    themeToggle.style.padding = "10px 20px";
+    themeToggle.style.border = "none";
+    themeToggle.style.borderRadius = "5px";
+    themeToggle.style.cursor = "pointer";
+    themeToggle.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+    themeToggle.style.color = "white";
+    themeToggle.style.fontSize = "16px";
+    document.body.appendChild(themeToggle);
+
+    const themes = ["light-theme", "dark-theme", "vibrant-theme", "pastel-theme", "monochrome-theme", "retro-theme", "nature-theme"];
+    let currentThemeIndex = 0;
+
+    const savedTheme = localStorage.getItem("selectedTheme");
+    if (savedTheme) {
+        currentThemeIndex = themes.indexOf(savedTheme);
+        document.body.classList.add(savedTheme);
+    } else {
+        document.body.classList.add(themes[currentThemeIndex]);
+    }
+
+    themeToggle.addEventListener("click", function() {
+        document.body.classList.remove(themes[currentThemeIndex]);
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        document.body.classList.add(themes[currentThemeIndex]);
+        localStorage.setItem("selectedTheme", themes[currentThemeIndex]);
+    });
+});
+
 findCurrentAndNextClass();
 setInterval(findCurrentAndNextClass, 60000);
